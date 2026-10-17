@@ -1,0 +1,51 @@
+{
+  "name": "SaveGame",
+  "type": "object",
+  "properties": {
+    "player_name": {
+      "type": "string",
+      "default": "A N\u00e9vtelen"
+    },
+    "chapter": {
+      "type": "number",
+      "default": 1
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "beacons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "shards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pos_x": {
+      "type": "number"
+    },
+    "pos_y": {
+      "type": "number"
+    },
+    "pos_z": {
+      "type": "number"
+    },
+    "rot_y": {
+      "type": "number"
+    },
+    "playtime": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "chapter"
+  ]
+}
