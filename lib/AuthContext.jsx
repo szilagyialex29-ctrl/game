@@ -1,7 +1,5 @@
-const db = globalThis.__B44_DB__ || { auth:{ isAuthenticated: async()=>false, me: async()=>null }, entities:new Proxy({}, { get:()=>({ filter:async()=>[], get:async()=>null, create:async()=>({}), update:async()=>({}), delete:async()=>({}) }) }), integrations:{ Core:{ UploadFile:async()=>({ file_url:'' }) } } };
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
-
+import { base44 } from '@/base44Client';
 import { appParams } from '@/lib/app-params';
 
 const AuthContext = createContext();
@@ -25,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       setAuthError(null);
       
       try {
-        const publicSettings = await db.app.getPublicSettings();
+        const publicSettings = await base44.app.getPublicSettings();
         setAppPublicSettings(publicSettings);
         
         // If we got the app public settings successfully, check if user is authenticated
@@ -83,7 +81,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Now check if the user is authenticated
       setIsLoadingAuth(true);
-      const currentUser = await db.auth.me();
+      const currentUser = await base44.auth.me();
       setUser(currentUser);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);
@@ -110,16 +108,16 @@ export const AuthProvider = ({ children }) => {
     
     if (shouldRedirect) {
       // Use the SDK's logout method which handles token cleanup and redirect
-      db.auth.logout(window.location.href);
+      base44.auth.logout(window.location.href);
     } else {
       // Just remove the token without redirect
-      db.auth.logout();
+      base44.auth.logout();
     }
   };
 
   const navigateToLogin = () => {
     // Use the SDK's redirectToLogin method
-    db.auth.redirectToLogin(window.location.href);
+    base44.auth.redirectToLogin(window.location.href);
   };
 
   return (
